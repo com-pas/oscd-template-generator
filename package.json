@@ -12,7 +12,7 @@
     "test": "npm run compile && wtr --coverage",
     "test:watch": "npm run compile && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wtr --watch --coverage\"",
     "compile": "rimraf dist && tsc && cpy tree.json dist --no-overwrite",
-    "build": "npm run compile && rollup -c rollup.config.js && npm run analyze -- --exclude dist",
+    "build": "rimraf dist && rollup -c rollup.config.js && cpy tree.json dist --no-overwrite && npm run analyze -- --exclude dist",
     "start:build": "web-dev-server --root-dir dist --app-index index.html --open",
     "analyze": "cem analyze --litelement",
     "start": "npm run compile && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\"",
