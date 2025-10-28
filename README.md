@@ -1,30 +1,74 @@
-<p align="center">
-  <img width="200" src="https://open-wc.org/hero.png"></img>
-</p>
+# OSCD Template Generator
 
-## Open-wc Starter App
+OpenSCD plugin for creating new Logical Node Types (LNodeType) for IEC 61850 SCL files.
 
-[![Built with open-wc recommendations](https://img.shields.io/badge/built%20with-open--wc-blue.svg)](https://github.com/open-wc)
+## Overview
 
-## Quickstart
+This project provides a web component and supporting dialogs for generating and managing Logical Node Types (`LNodeType`) in SCL files. It uses [OpenSCD Core](https://github.com/openenergytools/open-scd-core), [SCL-lib](https://github.com/openscd/scl-lib), and [Tree Grid](https://github.com/openenergytools/tree-grid) for SCL manipulation and UI.
 
-To get started:
+## Features
+
+- Create and insert new `LNodeType` elements into SCL documents
+- Interactive tree-based selection of Data Objects and attributes for Logical Node Types
+- Dialogs for adding Data Objects, editing descriptions, previewing changes, and settings
+
+## Getting Started
+
+### Installation
+
+Clone the repository and install dependencies:
 
 ```sh
-npm init @open-wc
-# requires node 10 & npm 6 or higher
+git clone https://github.com/com-pas/oscd-template-generator.git
+cd oscd-template-generator
+npm install
 ```
+
+### Development
+
+To start the development server with live reload on http://localhost:8000/:
+
+```sh
+npm start
+```
+
+To build the project for production:
+
+```sh
+npm run build
+```
+
+To run tests:
+
+```sh
+npm test
+```
+
+To lint and format code:
+
+```sh
+npm run lint
+npm run format
+```
+
+## Usage
+
+The main component is `oscd-template-generator`. It can be integrated into OpenSCD or used standalone in a web application. See `index.html` for a usage example.
 
 ## Scripts
 
-- `start` runs your app for development, reloading on file changes
-- `start:build` runs your app after it has been built using the build command
-- `build` builds your app and outputs it in your `dist` directory
-- `test` runs your test suite with Web Test Runner
-- `lint` runs the linter for your project
+- `start` - Start development server with live reload
+- `build` - Build the app and output to `dist`
+- `test` - Run test suite with coverage
+- `lint` - Run linter and prettier checks
+- `format` - Auto-format code
+- `deploy` - Build and deploy to GitHub Pages
 
-## Tooling configs
+## Project Structure
 
-For most of the tools, the configuration is in the `package.json` to reduce the amount of files in your project.
-
-If you customize the configuration a lot, you can consider moving them to individual files.
+- `oscd-template-generator.ts` - Main web component
+- `components/` - Dialogs and UI components
+- `foundation.ts` - Utility functions for tree and selection logic
+- `constants.ts` - Shared constants
+- `utils/` - Utility helpers
+- `index.html` - Demo entry point
