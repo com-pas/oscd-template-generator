@@ -4,6 +4,7 @@
   "license": "Apache-2.0",
   "author": "oscd-template-generator",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "prepare": "gunzip -d tree.json.gz && npm run build",
     "lint": "eslint --ext .ts,.html . --ignore-path .gitignore --ignore-pattern \"**/*.spec.ts\" && prettier \"**/*.ts\" --check --ignore-path .gitignore",
@@ -20,8 +21,9 @@
   "dependencies": {
     "@open-wc/scoped-elements": "^3.0.5",
     "@openenergytools/open-scd-core": "0.0.5",
-    "@openenergytools/scl-lib": "1.7.0",
     "@openenergytools/tree-grid": "1.1.0",
+    "@openscd/oscd-api": "^0.1.5",
+    "@openscd/scl-lib": "2.0.0",
     "@scopedelement/material-web": "^3.6.2",
     "ace-custom-element": "^1.6.5",
     "lit": "^3.0.0"

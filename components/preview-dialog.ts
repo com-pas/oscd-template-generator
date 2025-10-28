@@ -5,10 +5,7 @@ import { query, property } from 'lit/decorators.js';
 import { MdDialog } from '@scopedelement/material-web/dialog/dialog.js';
 import { MdTextButton } from '@scopedelement/material-web/button/text-button.js';
 import AceEditor from 'ace-custom-element';
-import {
-  insertSelectedLNodeType,
-  LNodeDescription,
-} from '@openenergytools/scl-lib';
+import { insertSelectedLNodeType, LNodeDescription } from '@openscd/scl-lib';
 import { TreeSelection } from '@openenergytools/tree-grid';
 import { createBaseSCLDoc, serializeAndFormat } from '../foundation.js';
 
@@ -25,7 +22,7 @@ export class PreviewDialog extends ScopedElementsMixin(LitElement) {
   dialog!: MdDialog;
 
   @query('ace-editor')
-  aceEditor!: AceEditor;
+  aceEditor!: typeof AceEditor;
 
   @property({ type: Object })
   selection: TreeSelection = {};
