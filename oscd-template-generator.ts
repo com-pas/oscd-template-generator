@@ -11,7 +11,7 @@ import {
   insertSelectedLNodeType,
   nsdToJson,
   LNodeDescription,
-} from '@openenergytools/scl-lib';
+} from '@openscd/scl-lib';
 
 import { TreeGrid, TreeSelection } from '@openenergytools/tree-grid';
 
@@ -24,7 +24,7 @@ import { MdFilledSelect as MdOutlinedSelect } from '@scopedelement/material-web/
 import { MdOutlinedTextField } from '@scopedelement/material-web/textfield/MdOutlinedTextField.js';
 import { MdOutlinedButton } from '@scopedelement/material-web/button/outlined-button.js';
 import { MdDialog } from '@scopedelement/material-web/dialog/dialog.js';
-import { CdcChildren } from '@openenergytools/scl-lib/dist/tDataTypeTemplates/nsdToJson.js';
+import { CdcChildren } from '@openscd/scl-lib/dist/tDataTypeTemplates/nsdToJson.js';
 import { Snackbar } from './components/snackbar.js';
 import { CreateDataObjectDialog } from './components/create-do-dialog.js';
 import { DescriptionDialog } from './components/description-dialog.js';
