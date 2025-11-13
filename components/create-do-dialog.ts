@@ -77,7 +77,7 @@ export class CreateDataObjectDialog extends ScopedElementsMixin(LitElement) {
       name: {
         formField: this.doName,
         validators: [
-          Validators.required('DO Name required'),
+          Validators.required('DO name required'),
           this.doNameTakenValidator,
         ],
       },
