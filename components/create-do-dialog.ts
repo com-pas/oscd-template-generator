@@ -8,6 +8,13 @@ import { MdFilledSelect } from '@scopedelement/material-web/select/MdOutlineSele
 import { MdOutlinedTextField } from '@scopedelement/material-web/textfield/MdOutlinedTextField.js';
 import { MdDialog } from '@scopedelement/material-web/dialog/dialog.js';
 import { MdTextButton } from '@scopedelement/material-web/button/text-button.js';
+import {
+  FormGroup,
+  FormValue,
+  Validators,
+  type Validator,
+  type Value,
+} from '@compas-oscd/forms';
 import { debounce } from '../utils/debounce.js';
 
 // eslint-disable-next-line no-shadow
@@ -54,6 +61,8 @@ export class CreateDataObjectDialog extends ScopedElementsMixin(LitElement) {
   @query('#namespace')
   namespace!: MdOutlinedTextField;
 
+  private formGroup: FormGroup | null = null;
+
   private namespaceDefaultValue = 'User-Defined';
 
   @state()
@@ -64,6 +73,32 @@ export class CreateDataObjectDialog extends ScopedElementsMixin(LitElement) {
   }
 
   show() {
+    this.formGroup = new FormGroup({
+      name: {
+        formField: this.doName,
+        validators: [
+          Validators.required('DO name required'),
+          this.doNameTakenValidator,
+        ],
+      },
+      cdc: {
+        formField: this.cdcType,
+        validators: [
+          Validators.required('CDC required'),
+          this.cdcTypeValidator,
+        ],
+      },
+      namespace: {
+        formField: this.namespace,
+        validators: [
+          Validators.requiredIf(
+            () => this.isCustomNamespaceRequired(),
+            'Custom namespace required'
+          ),
+        ],
+      },
+    });
+
     this.dialog?.show();
   }
 
@@ -79,7 +114,31 @@ export class CreateDataObjectDialog extends ScopedElementsMixin(LitElement) {
       this.doName.error = false;
       this.doName.value = '';
     }
+
+    if (this.namespace) {
+      this.namespace.errorText = '';
+      this.namespace.error = false;
+      this.namespace.value = '';
+    }
+
     this.dialog?.close();
+  }
+
+  private doNameTakenValidator: Validator = (doName: Value) => {
+    const isTaken = (doName as string) in this.tree;
+    return isTaken ? 'DO name already in use' : null;
+  };
+
+  private cdcTypeValidator: Validator = () => {
+    const doNameStatus = this.getDONameStatus();
+    return doNameStatus === DONameStatus.InvalidCDC
+      ? 'CDC type invalid for this DO'
+      : null;
+  };
+
+  private isCustomNamespaceRequired(): boolean {
+    const doStatus = this.getDONameStatus();
+    return doStatus === DONameStatus.CustomNamespaceNeeded;
   }
 
   private getDONameStatus(): DONameStatus {
@@ -124,70 +183,8 @@ export class CreateDataObjectDialog extends ScopedElementsMixin(LitElement) {
       return;
     }
 
-    const status = this.getDONameStatus();
-    this.setDONameStatusError(status);
-
-    this.isCustomNamespaceDisabled =
-      status !== DONameStatus.CustomNamespaceNeeded;
+    this.isCustomNamespaceDisabled = !this.isCustomNamespaceRequired();
   }, 300);
-
-  private setDONameStatusError(status: DONameStatus): void {
-    if (status === DONameStatus.Taken) {
-      this.doName.errorText = 'DO name already in use';
-      this.doName.error = true;
-    } else {
-      this.doName.errorText = '';
-      this.doName.error = false;
-    }
-
-    if (status === DONameStatus.InvalidCDC) {
-      this.cdcType.errorText = 'CDC type invalid for this DO';
-      this.cdcType.error = true;
-    } else {
-      this.cdcType.errorText = '';
-      this.cdcType.error = false;
-    }
-  }
-
-  private validate(): boolean {
-    let isValid = true;
-
-    if (!this.cdcType?.value) {
-      this.cdcType.errorText = 'Please select a common data class.';
-      this.cdcType.error = true;
-      isValid = false;
-    } else {
-      this.cdcType.errorText = '';
-      this.cdcType.error = false;
-    }
-
-    if (!this.doName?.checkValidity()) {
-      this.doName.errorText = 'Not a valid DO name.';
-      this.doName.error = true;
-      isValid = false;
-    } else {
-      this.doName.errorText = '';
-      this.doName.error = false;
-    }
-
-    const status = this.getDONameStatus();
-
-    if (status === DONameStatus.CustomNamespaceNeeded) {
-      if (!this.namespace.value) {
-        this.namespace.errorText = 'Custom namespace required.';
-        this.namespace.error = true;
-        isValid = false;
-      }
-    } else if (
-      status === DONameStatus.Taken ||
-      status === DONameStatus.InvalidCDC
-    ) {
-      this.setDONameStatusError(status);
-      isValid = false;
-    }
-
-    return isValid;
-  }
 
   /* eslint-disable class-methods-use-this */
   private resetErrorText(e: Event): void {
@@ -199,7 +196,9 @@ export class CreateDataObjectDialog extends ScopedElementsMixin(LitElement) {
   }
 
   private handleConfirm() {
-    if (!this.validate()) return;
+    if (!this.formGroup?.validate()) {
+      return;
+    }
 
     const status = this.getDONameStatus();
 

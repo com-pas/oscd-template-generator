@@ -25,6 +25,7 @@
     "@openscd/oscd-api": "^0.1.5",
     "@openscd/scl-lib": "2.0.0",
     "@scopedelement/material-web": "^3.6.2",
+    "@compas-oscd/forms": "^0.0.1",
     "ace-custom-element": "^1.6.5",
     "lit": "^3.0.0"
   },

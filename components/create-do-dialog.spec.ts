@@ -36,6 +36,8 @@ describe('CreateDataObjectDialog', () => {
     >
     </create-data-object-dialog>`);
 
+    element.show();
+
     confirmButton = element.shadowRoot?.querySelector('#confirm-btn')!;
     cancelButton = element.shadowRoot?.querySelector('#cancel-btn')!;
   });
@@ -99,9 +101,7 @@ describe('CreateDataObjectDialog', () => {
 
       expect(confirmSpy.callCount).to.equal(0);
       expect(element.namespace.error).to.be.true;
-      expect(element.namespace.errorText).to.equal(
-        'Custom namespace required.'
-      );
+      expect(element.namespace.errorText).to.equal('Custom namespace required');
     });
   });
 });

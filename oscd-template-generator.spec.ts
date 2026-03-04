@@ -59,11 +59,9 @@ describe('TemplateGenerator', () => {
       confirmButton.click();
 
       expect(dialog.cdcType.error).to.be.true;
-      expect(dialog.cdcType.errorText).to.equal(
-        'Please select a common data class.'
-      );
+      expect(dialog.cdcType.errorText).to.equal('CDC required');
       expect(dialog.doName.error).to.be.true;
-      expect(dialog.doName.errorText).to.equal('Not a valid DO name.');
+      expect(dialog.doName.errorText).to.equal('DO name required');
       const doNameInput = dialog.shadowRoot?.querySelector(
         '#do-name'
       ) as HTMLInputElement;
