@@ -1,4 +1,5 @@
 saveExact: true
 minimumReleaseAge: 4320 # 3 days
 allowBuilds:
+  core-js-bundle: true
   husky: true
