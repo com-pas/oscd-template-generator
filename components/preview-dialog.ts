@@ -4,10 +4,10 @@ import { LitElement, html, css } from 'lit';
 import { query, property } from 'lit/decorators.js';
 import { MdDialog } from '@scopedelement/material-web/dialog/dialog.js';
 import { MdTextButton } from '@scopedelement/material-web/button/text-button.js';
-import AceEditor from 'ace-custom-element';
 import { insertSelectedLNodeType, LNodeDescription } from '@openscd/scl-lib';
 import { TreeSelection } from '@openenergytools/tree-grid';
 import { createBaseSCLDoc, serializeAndFormat } from '../foundation.js';
+import 'ace-custom-element';
 
 const aceTheme = `solarized_${localStorage.getItem('theme') || 'light'}`;
 
@@ -15,14 +15,13 @@ export class PreviewDialog extends ScopedElementsMixin(LitElement) {
   static scopedElements = {
     'md-dialog': MdDialog,
     'md-text-button': MdTextButton,
-    'ace-editor': AceEditor,
   };
 
   @query('md-dialog')
   dialog!: MdDialog;
 
   @query('ace-editor')
-  aceEditor!: typeof AceEditor;
+  aceEditor!: HTMLElement;
 
   @property({ type: Object })
   selection: TreeSelection = {};

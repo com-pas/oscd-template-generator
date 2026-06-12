@@ -1,0 +1,4 @@
+saveExact: true
+minimumReleaseAge: 4320 # 3 days
+allowBuilds:
+  husky: true

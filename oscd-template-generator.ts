@@ -428,6 +428,15 @@ export default class TemplateGenerator extends ScopedElementsMixin(LitElement) {
 
     md-outlined-button {
       text-transform: uppercase;
+      --md-outlined-button-label-text-font: var(--oscd-theme-text-font, 'Roboto');
+      --md-outlined-button-label-text-line-height: 1.25rem;
+    }
+
+    md-outlined-button::part(ripple),
+    md-outlined-button::part(focus-ring) {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
     }
 
     md-icon {
